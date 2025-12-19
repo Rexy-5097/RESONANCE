@@ -3,7 +3,7 @@ import { Eye, Mic, Wifi } from 'lucide-react';
 import clsx from 'clsx';
 import CyberCard from '../ui/CyberCard';
 
-const StatusCard = ({ icon: Icon, label, status, type }) => {
+const StatusCard = ({ icon: Icon, label, status }) => {
     const isOk = status === 'ACTIVE' || status === 'LISTENING';
 
     return (
