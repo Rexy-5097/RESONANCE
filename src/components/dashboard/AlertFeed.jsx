@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertTriangle, AlertCircle, Info } from 'lucide-react';
+import CyberCard from '../ui/CyberCard';
 
 const mockAlerts = [
     { id: 1, type: 'warn', message: 'Audio energy spike detected', time: '10:42:33', loc: 'Sector 4' },
@@ -39,19 +40,19 @@ const AlertItem = ({ alert }) => {
 
 const AlertFeed = () => {
     return (
-        <div className="bg-safety-panel border border-slate-700 rounded-lg p-4 flex flex-col h-full overflow-hidden shadow-lg">
-            <h3 className="text-slate-100 font-bold uppercase tracking-widest text-sm mb-4 flex items-center gap-2">
+        <CyberCard className="flex flex-col h-full">
+            <h3 className="text-slate-100 font-bold uppercase tracking-widest text-sm mb-4 flex items-center gap-2 glow-text">
                 <AlertCircle size={16} className="text-slate-400" />
                 Live Feed
             </h3>
-            <div className="flex-1 overflow-y-auto pr-1 space-y-1">
+            <div className="flex-1 overflow-y-auto pr-1 space-y-1 custom-scrollbar">
                 {mockAlerts.map(alert => (
                     <AlertItem key={alert.id} alert={alert} />
                 ))}
                 {/* Gradient fade at bottom */}
                 <div className="h-4" />
             </div>
-        </div>
+        </CyberCard>
     );
 };
 

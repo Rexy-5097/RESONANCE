@@ -1,5 +1,6 @@
 import React from 'react';
 import { Cpu, HardDrive, Zap } from 'lucide-react';
+import CyberCard from '../ui/CyberCard';
 
 const MetricRow = ({ label, value, unit, icon: Icon }) => (
     <div className="flex items-center justify-between py-3 border-b border-slate-800 last:border-0">
@@ -16,8 +17,8 @@ const MetricRow = ({ label, value, unit, icon: Icon }) => (
 
 const SystemHealth = () => {
     return (
-        <div className="bg-safety-panel border border-slate-700 rounded-lg p-4 shadow-lg">
-            <h3 className="text-slate-100 font-bold uppercase tracking-widest text-sm mb-4 flex items-center gap-2">
+        <CyberCard>
+            <h3 className="text-slate-100 font-bold uppercase tracking-widest text-sm mb-4 flex items-center gap-2 glow-text">
                 <Zap size={16} className="text-slate-400" />
                 System Health
             </h3>
@@ -28,12 +29,12 @@ const SystemHealth = () => {
                 <MetricRow label="Uptime" value="04:22:11" unit="H:M:S" icon={Zap} />
             </div>
 
-            <div className="mt-4 pt-4 border-t border-slate-800">
-                <div className="text-xs text-slate-500 font-mono text-center">
+            <div className="mt-4 pt-4 border-t border-slate-800/50">
+                <div className="text-xs text-slate-500 font-mono text-center opacity-60">
                     VERSION 0.1.0-ALPHA
                 </div>
             </div>
-        </div>
+        </CyberCard>
     );
 };
 
