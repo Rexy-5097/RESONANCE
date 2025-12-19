@@ -10,6 +10,7 @@ const DashboardLayout = ({ children }) => {
             <div className="flex-1 flex flex-col h-full overflow-hidden relative">
                 {/* Global atmospheric overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-safety-bg to-[#0f172a] opacity-50 pointer-events-none z-0" />
+                <div className="bg-scanline" />
 
                 <Header />
 

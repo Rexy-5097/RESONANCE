@@ -1,5 +1,6 @@
 import React from 'react';
 import { Activity, FileText, Settings, Shield } from 'lucide-react';
+import { motion } from 'framer-motion';
 import clsx from 'clsx';
 
 const Sidebar = () => {
@@ -18,18 +19,35 @@ const Sidebar = () => {
 
             <nav className="flex flex-col gap-4 w-full items-center">
                 {navItems.map((item, index) => (
-                    <button
+                    <motion.button
                         key={index}
                         className={clsx(
-                            "p-3 rounded-lg transition-colors duration-200",
+                            "p-3 rounded-lg relative",
                             item.active
-                                ? "bg-slate-800 text-tech-cyan border border-slate-700"
-                                : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/50"
+                                ? "text-tech-cyan"
+                                : "text-slate-400"
                         )}
                         title={item.label}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
+                        {/* Active Background Glow */}
+                        {item.active && (
+                            <motion.div
+                                layoutId="sidebar-active"
+                                className="absolute inset-0 bg-slate-800 border border-slate-700 rounded-lg -z-10 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+                            />
+                        )}
+
+                        {/* Hover Overlay */}
+                        <motion.div
+                            className="absolute inset-0 bg-slate-800/50 rounded-lg opacity-0 -z-10"
+                            whileHover={{ opacity: 1 }}
+                        />
+
                         <item.icon size={20} />
-                    </button>
+                    </motion.button>
                 ))}
             </nav>
 
