@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import DashboardLayout from './components/layout/DashboardLayout';
+import PulseMonitor from './components/dashboard/PulseMonitor';
+import SensorStatus from './components/dashboard/SensorStatus';
+import AlertFeed from './components/dashboard/AlertFeed';
+import SystemHealth from './components/dashboard/SystemHealth';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <DashboardLayout>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pb-6 h-full content-start">
+        {/* Top Row: Pulse Monitor (Wide) */}
+        <div className="lg:col-span-3">
+          <PulseMonitor />
+        </div>
+
+        {/* Right Column: System Health */}
+        <div className="lg:col-span-1 h-full">
+          <SystemHealth />
+        </div>
+
+        {/* Bottom Row: Sensors & Alerts */}
+        <div className="lg:col-span-2">
+          <SensorStatus />
+        </div>
+        <div className="lg:col-span-2 h-64 lg:h-auto">
+          <AlertFeed />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </DashboardLayout>
+  );
 }
 
-export default App
+export default App;
