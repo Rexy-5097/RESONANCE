@@ -144,7 +144,16 @@ const useResonanceLogic = ({ audioLevel, kineticEnergy }) => {
 
     }, [systemState]);
 
-    return { systemState, fusionScore, alertLog };
+    // 4. External Log Injection (for Cloud service)
+    const addExternalLog = useCallback((logEntry) => {
+        setAlertLog(prev => {
+            const next = [...prev, { ...logEntry, id: Date.now() }];
+            if (next.length > 5) next.shift();
+            return next;
+        });
+    }, []);
+
+    return { systemState, fusionScore, alertLog, addExternalLog };
 };
 
 export default useResonanceLogic;
