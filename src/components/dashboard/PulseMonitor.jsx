@@ -4,22 +4,16 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import CyberCard from '../ui/CyberCard';
 
-const PulseMonitor = () => {
+const PulseMonitor = ({ fusionScore = 50, audioLevel = 0, kineticEnergy = 0 }) => {
     const [data, setData] = useState(Array(50).fill(50));
 
+    // Update history with incoming fusionScore
     useEffect(() => {
-        const updateSignal = () => {
-            setData(prev => {
-                const time = Date.now() / 1000;
-                const base = Math.sin(time * 2) * 15;
-                const noise = Math.sin(time * 5) * 5 + (Math.random() - 0.5) * 4;
-                const val = Math.max(0, Math.min(100, 50 + base + noise));
-                return [...prev.slice(1), val];
-            });
-        };
-        const interval = setInterval(updateSignal, 100); // Faster update for oscilloscope feel
-        return () => clearInterval(interval);
-    }, []);
+        setData(prev => {
+            const next = [...prev.slice(1), fusionScore];
+            return next;
+        });
+    }, [fusionScore]);
 
     const width = 600;
     const height = 200;
@@ -50,7 +44,9 @@ const PulseMonitor = () => {
                     </div>
                     <div>
                         <h3 className="text-sm font-bold text-slate-100 uppercase tracking-widest glow-text font-mono">Crowd Stress Index</h3>
-                        <p className="text-xs text-slate-500 font-mono">LIVE SIGNAL • 100ms</p>
+                        <p className="text-xs text-slate-500 font-mono">
+                            FUSION: AUDIO {audioLevel.toFixed(0)}% • VISUAL {kineticEnergy.toFixed(0)}%
+                        </p>
                     </div>
                 </div>
                 <div className="text-right">
