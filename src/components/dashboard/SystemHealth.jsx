@@ -24,9 +24,9 @@ const SystemHealth = () => {
             </h3>
 
             <div className="flex flex-col">
-                <MetricRow label="CPU Load" value="12" unit="%" icon={Cpu} />
-                <MetricRow label="Memory" value="2.4" unit="GB" icon={HardDrive} />
-                <MetricRow label="Uptime" value="04:22:11" unit="H:M:S" icon={Zap} />
+                <MetricRow label="CPU Load" value="---" unit="%" icon={Cpu} />
+                <MetricRow label="Memory" value="---" unit="GB" icon={HardDrive} />
+                <MetricRow label="Uptime" value="00:00:00" unit="H:M:S" icon={Zap} />
             </div>
 
             <div className="mt-4 pt-4 border-t border-slate-800/50">

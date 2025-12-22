@@ -3,11 +3,9 @@ import { Terminal } from 'lucide-react';
 import CyberCard from '../ui/CyberCard';
 
 // Mock data (Chronological: Oldest -> Newest for Terminal handling)
+// Initial System Log
 const mockAlerts = [
-    { id: 4, type: 'info', message: 'System automated check complete', time: '10:30:00', loc: 'SYS' },
-    { id: 3, type: 'crit', message: 'Sensor connection unstable', time: '10:39:42', loc: 'Cam-04' },
-    { id: 2, type: 'info', message: 'Motion variance increased', time: '10:41:15', loc: 'Sector 2' },
-    { id: 1, type: 'warn', message: 'Audio energy spike detected', time: '10:42:33', loc: 'Sector 4' },
+    { id: 1, type: 'info', message: 'Sensor Array Initialized', time: '00:00:00', loc: 'SYS' },
 ];
 
 const AlertItem = ({ alert, isLatest }) => {
