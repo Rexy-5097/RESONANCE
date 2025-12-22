@@ -2,17 +2,29 @@ import React from 'react';
 import { WifiOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const Header = () => {
+const Header = ({ systemState = 'STABLE' }) => {
+    const getStatusColor = () => {
+        switch (systemState) {
+            case 'CRITICAL': return 'bg-signal-crit shadow-signal-crit/50';
+            case 'ELEVATED': return 'bg-signal-warn shadow-signal-warn/50';
+            default: return 'bg-signal-safe shadow-signal-safe/50';
+        }
+    };
+
+    const getStatusText = () => systemState;
     return (
         <header className="h-16 bg-safety-bg border-b border-white/5 flex items-center justify-between px-6 z-40 relative shadow-md shadow-black/20">
             <div className="flex items-center gap-4">
                 {/* Live Status Indicator */}
                 <div className="flex items-center gap-2 mr-2">
                     <motion.div
-                        className="w-2 h-2 rounded-full bg-signal-safe"
+                        className={`w-2 h-2 rounded-full ${getStatusColor()}`}
                         animate={{ opacity: [0.4, 1, 0.4] }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: systemState === 'CRITICAL' ? 0.5 : 3, repeat: Infinity, ease: "easeInOut" }}
                     />
+                    <span className={`text-xs font-bold tracking-widest ${systemState === 'CRITICAL' ? 'text-signal-crit animate-pulse' : 'text-slate-400'}`}>
+                        {getStatusText()}
+                    </span>
                 </div>
 
                 <h1 className="text-xl font-bold tracking-wider text-white flex items-center gap-2">

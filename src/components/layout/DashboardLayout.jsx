@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import Sidebar from './Sidebar';
 import Header from './Header';
 
-const DashboardLayout = ({ children }) => {
+const DashboardLayout = ({ children, systemState = 'STABLE' }) => {
     return (
         <div className="flex h-screen w-screen bg-safety-bg overflow-hidden text-slate-200 font-sans selection:bg-tech-cyan selection:text-black">
             <Sidebar />
@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }) => {
                 <div className="absolute inset-0 bg-gradient-to-br from-safety-bg to-[#0f172a] opacity-50 pointer-events-none z-0" />
                 <div className="bg-scanline" />
 
-                <Header />
+                <Header systemState={systemState} />
 
                 <main className="flex-1 overflow-auto p-6 relative z-10 w-full h-full">
                     <motion.div
