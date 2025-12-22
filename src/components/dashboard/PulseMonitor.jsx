@@ -4,8 +4,37 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import CyberCard from '../ui/CyberCard';
 
-const PulseMonitor = ({ fusionScore = 50, audioLevel = 0, kineticEnergy = 0 }) => {
+// Sonic Feedback Helper
+const playCritBeep = () => {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+    osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.1);
+
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.15);
+};
+
+const PulseMonitor = ({ fusionScore = 50, audioLevel = 0, kineticEnergy = 0, systemState = 'STABLE' }) => {
     const [data, setData] = useState(Array(50).fill(50));
+    const prevSystemState = React.useRef(systemState);
+
+    // Sonic Feedback on Critical Entry
+    useEffect(() => {
+        if (systemState === 'CRITICAL' && prevSystemState.current !== 'CRITICAL') {
+            playCritBeep();
+        }
+        prevSystemState.current = systemState;
+    }, [systemState]);
 
     // Update history with incoming fusionScore
     useEffect(() => {
@@ -25,15 +54,18 @@ const PulseMonitor = ({ fusionScore = 50, audioLevel = 0, kineticEnergy = 0 }) =
 
     const currentValue = data[data.length - 1];
 
-    const getStatusColor = (val) => {
-        if (val > 80) return 'text-signal-crit shadow-signal-crit/20';
-        if (val > 60) return 'text-signal-warn shadow-signal-warn/20';
-        return 'text-tech-cyan shadow-tech-cyan/20';
+    const getStatusColor = () => {
+        switch (systemState) {
+            case 'CRITICAL': return 'text-signal-crit shadow-signal-crit/20';
+            case 'ELEVATED': return 'text-signal-warn shadow-signal-warn/20';
+            default: return 'text-tech-cyan shadow-tech-cyan/20';
+        }
     }
 
-    const statusClass = getStatusColor(currentValue);
-    // Use Cyan as default, Red/Orange for alerts
-    const glowColor = currentValue > 80 ? '#EF4444' : currentValue > 60 ? '#F59E0B' : '#06B6D4';
+    const statusClass = getStatusColor();
+
+    // Dynamic Stroke Color based on Phase
+    const glowColor = systemState === 'CRITICAL' ? '#EF4444' : systemState === 'ELEVATED' ? '#F59E0B' : '#06B6D4';
 
     return (
         <CyberCard className="col-span-2 group">
