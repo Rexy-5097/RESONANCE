@@ -1,16 +1,88 @@
-# React + Vite
+# PROJECT RESONANCE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Status](https://img.shields.io/badge/status-active-success.svg)
+![Version](https://img.shields.io/badge/version-0.1.0-lightgrey.svg)
 
-Currently, two official plugins are available:
+## 📡 System Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Project RESONANCE** is a next-generation, high-fidelity dashboard designed for advanced sensor monitoring and system observability. Built with a "defense-grade" aesthetic, it prioritizes data clarity, responsiveness, and cinematic visual feedback to provide operators with real-time situational awareness.
 
-## React Compiler
+The interface transforms raw telemetry into a cohesive visual language, allowing for immediate identification of system anomalies, thermal spikes, and network integrity issues.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Key Capabilities
+- **Pulse Monitor**: Real-time visualization of data streams with dynamic motion metrics.
+- **Sensor Grid**: Live status tracking of distributed sensor nodes (Online/Offline/Warning).
+- **System Health**: Consolidated view of core metrics including Integrity, Power Draw, and Thermal status.
+- **Alert Feed**: Chronological log of system notifications and critical warnings.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Technology Stack
+
+This project is engineered using a modern, performance-first frontend stack:
+
+- **Core Framework**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+  - utilizing the latest React features for concurrent rendering and state management.
+- **Styling System**: [TailwindCSS](https://tailwindcss.com/)
+  - Utility-first architecture for rapid, consistent styling.
+  - `clsx` & `tailwind-merge` for robust class composition.
+- **Motion Engine**: [Framer Motion](https://www.framer.com/motion/)
+  - Physics-based animations for fluid, organic interface interactions.
+- **Iconography**: [Lucide React](https://lucide.dev/)
+  - Clean, consistent SVG icons optimized for performance.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+ recommended)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Start-Up-Inc/Resonance.git
+   cd Resonance
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Initialize Development Server**
+   ```bash
+   npm run dev
+   ```
+   The application will become available at `http://localhost:5173` (or the next available port).
+
+### Building for Production
+
+To create a production-ready build:
+```bash
+npm run build
+```
+This will compile assets to the `dist` directory, optimized for deployment.
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+├── components/
+│   ├── dashboard/       # Core visualization widgets (Pulse, Sensors, Health)
+│   ├── layout/          # Main application shell and structure
+│   └── ui/              # Reusable design system primitives
+├── App.jsx              # Main application entry point
+└── main.jsx             # React DOM root
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
