@@ -17,7 +17,7 @@ const PulseMonitor = () => {
                 return [...prev.slice(1), val];
             });
         };
-        const interval = setInterval(updateSignal, 500);
+        const interval = setInterval(updateSignal, 100); // Faster update for oscilloscope feel
         return () => clearInterval(interval);
     }, []);
 
@@ -32,74 +32,77 @@ const PulseMonitor = () => {
     const currentValue = data[data.length - 1];
 
     const getStatusColor = (val) => {
-        if (val > 80) return 'text-signal-crit border-signal-crit shadow-signal-crit/20';
-        if (val > 60) return 'text-signal-warn border-signal-warn shadow-signal-warn/20';
-        return 'text-signal-safe border-signal-safe shadow-signal-safe/20';
+        if (val > 80) return 'text-signal-crit shadow-signal-crit/20';
+        if (val > 60) return 'text-signal-warn shadow-signal-warn/20';
+        return 'text-tech-cyan shadow-tech-cyan/20';
     }
 
     const statusClass = getStatusColor(currentValue);
-    const glowColor = currentValue > 80 ? '#EF4444' : currentValue > 60 ? '#F59E0B' : '#10B981';
+    // Use Cyan as default, Red/Orange for alerts
+    const glowColor = currentValue > 80 ? '#EF4444' : currentValue > 60 ? '#F59E0B' : '#06B6D4';
 
     return (
         <CyberCard className="col-span-2 group">
             <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
-                    <div className={clsx("p-2 rounded bg-slate-900 border transition-colors duration-500", statusClass.split(' ')[1])}>
+                    <div className="p-2 rounded bg-slate-900 border border-slate-700">
                         <Activity size={20} className={statusClass.split(' ')[0]} />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-slate-100 uppercase tracking-widest glow-text">Crowd Stress Index</h3>
-                        <p className="text-xs text-slate-500 font-mono">LIVE SIGNAL • 500ms</p>
+                        <h3 className="text-sm font-bold text-slate-100 uppercase tracking-widest glow-text font-mono">Crowd Stress Index</h3>
+                        <p className="text-xs text-slate-500 font-mono">LIVE SIGNAL • 100ms</p>
                     </div>
                 </div>
                 <div className="text-right">
                     <div className={clsx("text-3xl font-mono font-bold transition-colors duration-300 glow-text", statusClass.split(' ')[0])}>
                         {currentValue.toFixed(1)}
                     </div>
-                    <p className="text-xs text-slate-500 uppercase font-medium tracking-wider">Index Level</p>
+                    <p className="text-xs text-slate-500 uppercase font-medium tracking-wider font-mono">Index Level</p>
                 </div>
             </div>
 
-            <div className="h-64 bg-slate-900/50 rounded border border-slate-800 relative w-full overflow-hidden">
-                {/* Grid Lines */}
-                {[0.25, 0.5, 0.75].map(p => (
-                    <div key={p} className="absolute w-full border-t border-slate-800/30" style={{ top: `${p * 100}%` }} />
-                ))}
-
-                <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" className="absolute inset-0 overflow-visible">
-
+            <div className="h-64 bg-slate-950 rounded border border-slate-800 relative w-full overflow-hidden">
+                <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" className="absolute inset-0">
                     <defs>
-                        <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
+                        {/* Grid Pattern */}
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="3 3" opacity="0.3" />
+                        </pattern>
+
+                        {/* Stroke Gradient: Fade from transparent (left/old) to color (right/new) */}
+                        <linearGradient id="stroke-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor={glowColor} stopOpacity="0" />
+                            <stop offset="20%" stopColor={glowColor} stopOpacity="0.2" />
+                            <stop offset="100%" stopColor={glowColor} stopOpacity="1" />
+                        </linearGradient>
+
+                        {/* Fill Gradient */}
                         <linearGradient id="fill-gradient" x1="0" x2="0" y1="0" y2="1">
-                            <stop offset="0%" stopColor={glowColor} stopOpacity="0.2" />
+                            <stop offset="0%" stopColor={glowColor} stopOpacity="0.1" />
                             <stop offset="100%" stopColor="transparent" stopOpacity="0" />
                         </linearGradient>
                     </defs>
 
-                    {/* Filled Area */}
+                    {/* Background Grid */}
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+
+                    {/* Filled Area - Subtle */}
                     <path
                         d={`M0,${height} L${points} L${width},${height} Z`}
                         fill="url(#fill-gradient)"
-                        className="transition-colors duration-500"
+                        className="transition-colors duration-300"
                     />
 
-                    {/* Animated Path */}
+                    {/* Main Trace using Gradient Stroke */}
                     <motion.path
-                        d={`M${points.split(' ')[0]} L${points}`} // Move to start then draw line
+                        d={`M${points.split(' ')[0]} L${points}`}
                         fill="none"
-                        stroke={glowColor}
-                        strokeWidth="3"
+                        stroke="url(#stroke-gradient)"
+                        strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        filter="url(#glow-filter)"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={{ pathLength: 1, opacity: 1 }}
-                        transition={{ duration: 1.5, ease: "easeInOut" }}
-                        vectorEffect="non-scaling-stroke"
-                        className="transition-colors duration-500"
+                        style={{ filter: `drop-shadow(0 0 4px ${glowColor})` }}
+                        className="transition-colors duration-300"
                     />
                 </svg>
             </div>
