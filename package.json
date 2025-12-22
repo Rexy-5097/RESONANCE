@@ -1,7 +1,7 @@
 {
   "name": "resonance",
   "private": true,
-  "description": "Defense-Grade Biometric Observability & Kinetic Threat Detection System",
+  "description": "A deterministic, real-time sensor fusion array for environmental awareness. Processes audio-visual telemetry on-device to derive crowd kinetic energy and distress metrics without cloud dependencies.",
   "version": "0.1.0",
   "type": "module",
   "scripts": {

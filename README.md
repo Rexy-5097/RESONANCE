@@ -6,7 +6,7 @@
 
 ## 📡 System Overview
 
-**Project RESONANCE** is a next-generation, high-fidelity dashboard designed for advanced sensor monitoring and system observability. Built with a "defense-grade" aesthetic, it prioritizes data clarity, responsiveness, and cinematic visual feedback to provide operators with real-time situational awareness.
+**Project RESONANCE** is a deterministic, real-time sensor fusion array for environmental awareness. It processes audio-visual telemetry on-device to derive crowd kinetic energy and distress metrics without cloud dependencies. Built with a "defense-grade" aesthetic, it prioritizes data clarity and cinematic visual feedback.
 
 The interface transforms raw telemetry into a cohesive visual language, allowing for immediate identification of system anomalies, thermal spikes, and network integrity issues.
 
